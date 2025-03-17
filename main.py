@@ -37,8 +37,11 @@ def fetch_data():
 
 def time_conv(utc_time = None):
     current_dt = datetime.now()
+
+    # obtaining sunrise & sunset from fetch data function
     sunrise = fetch_data()[1]['results']['sunrise']
-    print(sunrise)
+    sunset = fetch_data()[1]['results']['sunset']
+
 time_conv()
     
 
