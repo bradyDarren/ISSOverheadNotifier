@@ -36,11 +36,17 @@ def fetch_data():
 # 2. Convert time from UTC to CST
 
 def time_conv(utc_time = None):
-    current_dt = datetime.now()
+    current_dt = datetime.now().time() 
 
     # obtaining sunrise & sunset from fetch data function
     sunrise = fetch_data()[1]['results']['sunrise']
     sunset = fetch_data()[1]['results']['sunset']
+
+
+    print(type(sunrise))
+    # converting sunrise/sunset to CST from UTC
+    print(sunrise)
+
 
 time_conv()
     
