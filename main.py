@@ -39,24 +39,28 @@ def fetch_data():
 def time_conv(*utc_times):
     our_time = [] 
 
+    # changing the times obtained from our sunrise/sunset pairs from string to integers, making it easier to manipulate.
     for time in utc_times: 
-        result = time.split(":")
-        for section in result:
+        split_time = time.split(":")
+        for section in split_time:
             num_time = int(section)
             our_time.append(num_time)
 
+    # converting sunrise/sunset to CST from UTC
     if our_time[0] - 6 < 0:
         abs_time = abs(our_time[0] - 6)
         our_time[0] = DAILY_HOURS - abs_time
-
+    
+    # reconverting the time back to string values.
+    for index, t in enumerate(our_time):
+        our_time[index] = str(t)
+        if len(our_time[index]) != 2:
+            our_time[index] += "0"
     print(our_time)
-    
-    for t in our_time:
-        print(t) 
-    #     string_time = str(t)
-    #     our_time.append(string_time)
 
-    
+
+    # results = ":".join(our_time)
+
     # MUST MOVE TO THE MAIN() FUNC
     # obtaining sunrise & sunset from fetch data function
     # sunrise = fetch_data()[1]['results']['sunrise']
@@ -64,9 +68,8 @@ def time_conv(*utc_times):
 
     # return(utc_times)   
      
-    # converting sunrise/sunset to CST from UTC
 
-time_conv('1:00:00')
+time_conv('1:09:07')
     
 
 # 2. Check and see if it is currently dark.
