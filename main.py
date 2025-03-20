@@ -55,7 +55,7 @@ def time_conv(*utc_times):
     for index, t in enumerate(our_time):
         our_time[index] = str(t)
         if len(our_time[index]) != 2:
-            our_time[index] += "0"
+            our_time[index] = f"0{our_time[index]}"
     print(our_time)
 
 
