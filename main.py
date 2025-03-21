@@ -37,26 +37,35 @@ def fetch_data():
 # 2. Convert time from UTC to CST in a 24hr format
 # Find a simpler way to acheive the below function.
 def time_conv(*utc_times):
-    our_time = [] 
+    our_time = {}
     
     # converting sunrise/sunset to CST from UTC
     for time in utc_times:
         total_time = time.split("T")[1].split(':')
         hours = (int(total_time[0])- 6) % 24
-        # hours = (hours - 6) % 24
-        total_time[0] = str(hours)
-        total_time = total_time[:-2]
-        print(total_time)
+        if hours < 8:
+            our_time['sunrise'] = {'hour':hours,'minutes':int(total_time[1])}
+        else: 
+            our_time['sunset'] = {'hour':hours,'minutes':int(total_time[1])}
+
+        # total_time[0] = str(hours)
+        # total_time = total_time[:-2]
+    return our_time 
 
     # MUST MOVE TO THE MAIN() FUNC
     # obtaining sunrise & sunset from fetch data function
     # sunrise = fetch_data()[1]['results']['sunrise']
     # sunset = fetch_data()[1]['results']['sunset']
 
-time_conv('2025-03-21T13:07:16+00:00','2025-03-22T01:22:08+00:00')
+# print(time_conv('2025-03-21T13:07:16+00:00','2025-03-22T01:22:08+00:00'))
+
 # 2. Check and see if it is currently dark.
-def is_dark(time):
-    pass
+def is_dark(rise, set, time):
+    if rise < time and time < set: 
+        pass
+    elif rise == time or time == set: 
+        pass
+
 
 # 3. If dark send email to email address telling notifiying us to look up. 
 sunrise = fetch_data()[1]['results']['sunrise']
