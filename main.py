@@ -56,21 +56,15 @@ def time_conv(*utc_times):
         our_time[index] = str(t)
         if len(our_time[index]) != 2:
             our_time[index] = f"0{our_time[index]}"
-    print(our_time)
 
-
-    # results = ":".join(our_time)
+    results = ":".join(our_time)
 
     # MUST MOVE TO THE MAIN() FUNC
     # obtaining sunrise & sunset from fetch data function
     # sunrise = fetch_data()[1]['results']['sunrise']
     # sunset = fetch_data()[1]['results']['sunset']
 
-    # return(utc_times)   
-     
-
-time_conv('1:09:07')
-    
+    return(results)       
 
 # 2. Check and see if it is currently dark.
 
