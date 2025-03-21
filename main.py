@@ -52,13 +52,6 @@ def time_conv(*utc_times):
         # total_time = total_time[:-2]
     return our_time 
 
-    # MUST MOVE TO THE MAIN() FUNC
-    # obtaining sunrise & sunset from fetch data function
-    # sunrise = fetch_data()[1]['results']['sunrise']
-    # sunset = fetch_data()[1]['results']['sunset']
-
-# print(time_conv('2025-03-21T13:07:16+00:00','2025-03-22T01:22:08+00:00'))
-
 # 2. Check and see if it is currently dark.
 def is_dark(rise, set, time):
     if rise < time and time < set: 
@@ -70,5 +63,3 @@ def is_dark(rise, set, time):
 # 3. If dark send email to email address telling notifiying us to look up. 
 sunrise = fetch_data()[1]['results']['sunrise']
 sunset = fetch_data()[1]['results']['sunset']
-# print(sunrise)
-# print(sunset)
