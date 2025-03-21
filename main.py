@@ -42,9 +42,11 @@ def time_conv(*utc_times):
     # converting sunrise/sunset to CST from UTC
     for time in utc_times:
         total_time = time.split("T")[1].split(':')
-        hours = int(total_time[0])
-        hours = (hours - 6) % 24
+        hours = (int(total_time[0])- 6) % 24
+        # hours = (hours - 6) % 24
         total_time[0] = str(hours)
+        total_time = total_time[:-2]
+        print(total_time)
 
     # MUST MOVE TO THE MAIN() FUNC
     # obtaining sunrise & sunset from fetch data function
