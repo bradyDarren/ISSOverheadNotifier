@@ -17,7 +17,7 @@ def fetch_data():
     parameters = {
         'lat':MY_LAT,
         'lng':MY_LONG,
-        'formatted':1
+        'formatted':0
     }
 
     iss_response = requests.get(url = 'http://api.open-notify.org/iss-now.json')
@@ -28,44 +28,36 @@ def fetch_data():
 
     iss_data = iss_response.json()
     ss_data = ss_response.json()
-    
+
     data_obj.append(iss_data)
     data_obj.append(ss_data)
 
     return data_obj
 
 # 2. Convert time from UTC to CST in a 24hr format
-
+# Find a simpler way to acheive the below function.
 def time_conv(*utc_times):
     our_time = [] 
-
-    # changing the times obtained from our sunrise/sunset pairs from string to integers, making it easier to manipulate.
-    for time in utc_times: 
-        split_time = time.split(":")
-        for section in split_time:
-            num_time = int(section)
-            our_time.append(num_time)
-
-    # converting sunrise/sunset to CST from UTC
-    if our_time[0] - 6 < 0:
-        abs_time = abs(our_time[0] - 6)
-        our_time[0] = DAILY_HOURS - abs_time
     
-    # reconverting the time back to string values.
-    for index, t in enumerate(our_time):
-        our_time[index] = str(t)
-        if len(our_time[index]) != 2:
-            our_time[index] = f"0{our_time[index]}"
-
-    results = ":".join(our_time)
+    # converting sunrise/sunset to CST from UTC
+    for time in utc_times:
+        total_time = time.split("T")[1].split(':')
+        hours = int(total_time[0])
+        hours = (hours - 6) % 24
+        total_time[0] = str(hours)
 
     # MUST MOVE TO THE MAIN() FUNC
     # obtaining sunrise & sunset from fetch data function
     # sunrise = fetch_data()[1]['results']['sunrise']
     # sunset = fetch_data()[1]['results']['sunset']
 
-    return(results)       
-
+time_conv('2025-03-21T13:07:16+00:00','2025-03-22T01:22:08+00:00')
 # 2. Check and see if it is currently dark.
+def is_dark(time):
+    pass
 
 # 3. If dark send email to email address telling notifiying us to look up. 
+sunrise = fetch_data()[1]['results']['sunrise']
+sunset = fetch_data()[1]['results']['sunset']
+# print(sunrise)
+# print(sunset)
