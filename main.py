@@ -6,6 +6,7 @@ import smtplib
 MY_LAT = 38.545502
 MY_LONG = -106.926903
 MY_EMAIL = 'bradydarren056@gmail.com'
+PASSWORD = "ayae lpxi ubzt vhfh"
 DAILY_HOURS = 24
 
 # 1. Fetch data from API's
@@ -59,14 +60,20 @@ def is_dark(rise, set, time):
     else:
         dark = False
     return dark
-# 3. If dark send email to email address telling notifiying us to look up. 
-sunrise = fetch_data()[1]['results']['sunrise']
-sunset = fetch_data()[1]['results']['sunset']
 
-now = datetime.now()
-right_now = str(now).split(" ")[1].split(":")
-current = {}
-current ['hr'] = right_now[0]
-current ['min'] = right_now[1]
-print(current)
+# 3. If dark send email to email address telling notifiying us to look up. 
+def notify(night): 
+    if night: 
+        with smtplib.SMTP('smtp.gmail.com', port=587) as connection: 
+            connection.starttls()
+            connection.login(user=MY_EMAIL, password=PASSWORD)
+            subject = 'THE ISS IS VISIBLE IN THE NIGHT SKY!!!!'
+            body = 'Look Up!!'
+            message = f'Subject:{subject}\n\n{body}'
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=MY_EMAIL,
+                                msg=message.encode('utf-8'))
+# main function
+def main():
+    pass
  
