@@ -74,6 +74,10 @@ def notify(night):
                                 to_addrs=MY_EMAIL,
                                 msg=message.encode('utf-8'))
 
+# 3. Determin is the ISS is close to your coordinates: 
+def is_ISS_close(my_lat, my_lng, ISS_lat, ISS_lng):
+    pass 
+
 # main function
 def main():
     data = fetch_data()
@@ -81,5 +85,5 @@ def main():
     sunset = data[1]['results']['sunset']
 
     print(data[0])
-    
+
 main()
