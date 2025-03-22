@@ -44,9 +44,9 @@ def time_conv(*utc_times):
         total_time = time.split("T")[1].split(':')
         hours = (int(total_time[0])- 6) % 24
         if hours < 8:
-            our_time['sunrise'] = {'hour':hours,'minutes':int(total_time[1])}
+            our_time['sunrise'] = {'hr':hours,'min':int(total_time[1])}
         else: 
-            our_time['sunset'] = {'hour':hours,'minutes':int(total_time[1])}
+            our_time['sunset'] = {'hr':hours,'min':int(total_time[1])}
 
         # total_time[0] = str(hours)
         # total_time = total_time[:-2]
@@ -54,12 +54,19 @@ def time_conv(*utc_times):
 
 # 2. Check and see if it is currently dark.
 def is_dark(rise, set, time):
-    if rise < time and time < set: 
-        pass
-    elif rise == time or time == set: 
-        pass
-
-
+    if rise > time or time > set: 
+        dark = True
+    else:
+        dark = False
+    return dark
 # 3. If dark send email to email address telling notifiying us to look up. 
 sunrise = fetch_data()[1]['results']['sunrise']
 sunset = fetch_data()[1]['results']['sunset']
+
+now = datetime.now()
+right_now = str(now).split(" ")[1].split(":")
+current = {}
+current ['hr'] = right_now[0]
+current ['min'] = right_now[1]
+print(current)
+ 
