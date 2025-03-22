@@ -73,7 +73,13 @@ def notify(night):
             connection.sendmail(from_addr=MY_EMAIL,
                                 to_addrs=MY_EMAIL,
                                 msg=message.encode('utf-8'))
+
 # main function
 def main():
-    pass
- 
+    data = fetch_data()
+    sunrise = data[1]['results']['sunrise']
+    sunset = data[1]['results']['sunset']
+
+    print(data[0])
+    
+main()
