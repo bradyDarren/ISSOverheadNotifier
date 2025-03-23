@@ -95,11 +95,10 @@ def main():
     cst_sunset = cst_time['sunset']['hr']
 
     # obtaining the current time.
-    now = str(datetime.now()).split(' ')[1].split(':')
-    current_time = {'hr':now[0],'min':now[1]}
-
+    now = datetime.now().hour
+    
     # determine if it is dark and if the ISS is close enough for us to look up and see.
-    currently_dark = is_dark(rise=cst_sunrise, set=cst_sunset,time=int(current_time['hr']))
+    currently_dark = is_dark(rise=cst_sunrise, set=cst_sunset,time=now)
     close_enough = is_ISS_close(my_lat=MY_LAT,my_lng=MY_LONG,ISS_lat=ISS_lat,ISS_lng=ISS_lng)
 
     if currently_dark and close_enough:
