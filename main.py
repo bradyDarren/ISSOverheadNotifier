@@ -80,12 +80,23 @@ def is_ISS_close(my_lat, my_lng, ISS_lat, ISS_lng):
     lng_diff = abs(my_lng - ISS_lng)
     return lng_diff <= 10 and lat_diff <= 10
 
-print(is_ISS_close(10,10,5,5))
-
 # main function
 def main():
+
+    # obtaining data from the API's
     data = fetch_data()
     sunrise = data[1]['results']['sunrise']
     sunset = data[1]['results']['sunset']
+
+    #converting times obtained from API to CST time.
+    cst_time = time_conv(sunrise, sunset)
+    cst_sunrise = cst_time['sunrise']['hr']
+    cst_sunset = cst_time['sunset']['hr']
+
+    # obtaining the current time.
+    now = str(datetime.now()).split(' ')[1].split(':')
+    current_time = {'hr':now[0],'min':now[1]}
+
+    currently_dark = is_dark(rise=cst_sunrise, set=cst_sunset,time=current_time)
 
 main()
