@@ -62,17 +62,16 @@ def is_dark(rise, set, time):
     return dark
 
 # 3. If dark send email to email address telling notifiying us to look up. 
-def notify(night): 
-    if night: 
-        with smtplib.SMTP('smtp.gmail.com', port=587) as connection: 
-            connection.starttls()
-            connection.login(user=MY_EMAIL, password=PASSWORD)
-            subject = 'THE ISS IS VISIBLE IN THE NIGHT SKY!!!!'
-            body = 'Look Up!!'
-            message = f'Subject:{subject}\n\n{body}'
-            connection.sendmail(from_addr=MY_EMAIL,
-                                to_addrs=MY_EMAIL,
-                                msg=message.encode('utf-8'))
+def notify(): 
+    with smtplib.SMTP('smtp.gmail.com', port=587) as connection: 
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=PASSWORD)
+        subject = 'THE ISS IS VISIBLE IN THE NIGHT SKY!!!!'
+        body = 'Look Up!!'
+        message = f'Subject:{subject}\n\n{body}'
+        connection.sendmail(from_addr=MY_EMAIL,
+                            to_addrs=MY_EMAIL,
+                            msg=message.encode('utf-8'))
 
 # 4. Determine is the ISS is close to your coordinates: 
 def is_ISS_close(my_lat, my_lng, ISS_lat, ISS_lng):
@@ -87,6 +86,7 @@ def main():
     data = fetch_data()
     sunrise = data[1]['results']['sunrise']
     sunset = data[1]['results']['sunset']
+    ISS_location = data[0]['iss_position']
 
     #converting times obtained from API to CST time.
     cst_time = time_conv(sunrise, sunset)
@@ -97,6 +97,11 @@ def main():
     now = str(datetime.now()).split(' ')[1].split(':')
     current_time = {'hr':now[0],'min':now[1]}
 
-    currently_dark = is_dark(rise=cst_sunrise, set=cst_sunset,time=current_time)
+    # determine if it is dark and if the ISS is close enough for us to look up and see.
+    currently_dark = is_dark(rise=cst_sunrise, set=cst_sunset,time=int(current_time['hr']))
+    close_enough = is_ISS_close(my_lat=MY_LAT,my_lng=MY_LONG,ISS_lat=ISS_location['latitude'],ISS_lng=['longitude'])
+
+    if currently_dark and close_enough:
+        notify()
 
 main()
