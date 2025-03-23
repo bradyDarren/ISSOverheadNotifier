@@ -87,6 +87,7 @@ def main():
     sunrise = data[1]['results']['sunrise']
     sunset = data[1]['results']['sunset']
     ISS_location = data[0]['iss_position']
+    print(ISS_location)
 
     #converting times obtained from API to CST time.
     cst_time = time_conv(sunrise, sunset)
@@ -99,9 +100,9 @@ def main():
 
     # determine if it is dark and if the ISS is close enough for us to look up and see.
     currently_dark = is_dark(rise=cst_sunrise, set=cst_sunset,time=int(current_time['hr']))
-    close_enough = is_ISS_close(my_lat=MY_LAT,my_lng=MY_LONG,ISS_lat=ISS_location['latitude'],ISS_lng=['longitude'])
+    # close_enough = is_ISS_close(my_lat=MY_LAT,my_lng=MY_LONG,ISS_lat=ISS_location['latitude'],ISS_lng=['longitude'])
 
-    if currently_dark and close_enough:
-        notify()
+    # if currently_dark and close_enough:
+    #     notify()
 
 main()
