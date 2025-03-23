@@ -77,7 +77,7 @@ def notify():
 def is_ISS_close(my_lat, my_lng, ISS_lat, ISS_lng):
     lat_diff = abs(my_lat - ISS_lat)
     lng_diff = abs(my_lng - ISS_lng)
-    return lng_diff <= 10 and lat_diff <= 10
+    return lng_diff <= 5 and lat_diff <= 5
 
 # main function
 def main():
